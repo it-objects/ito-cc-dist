@@ -1,12 +1,13 @@
 class ItoCc < Formula
   desc "Claude Code with Amazon Bedrock"
   homepage "https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock"
-  url "https://raw.githubusercontent.com/it-objects/homebrew-ito-cc/main/packages/claude-code-package-20251216-183339.zip"
+  url "https://raw.githubusercontent.com/it-objects/homebrew-ito-cc/main/packages/claude-code-package-20251216-183351.zip"
   sha256 "0bb83631829de182864ed8c620acd87d462666fef516f5c484900a3ea30a9b5a"
-  version "2025.12.16.183339"
+  version "2025.12.16.183351"
 
   depends_on "awscli"
   depends_on "python@3.12"
+  depends_on "claude"
 
   def install
       # Install binaries to libexec to keep config.json next to them
