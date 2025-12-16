@@ -1,9 +1,9 @@
 class ClaudeCodeWithBedrock < Formula
   desc "Claude Code with Amazon Bedrock"
   homepage "https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock"
-  url "https://download.claude.it-objects.de/packages/mac/latest.zip"
-  sha256 "51c65e004ae4931e3f1afa2a6b505150b39396919fff325a4e3b111ef5a2f350"
-  version "2025...12"
+  url "https://raw.githubusercontent.com/it-objects/ito-cc-dist/main/packages/claude-code-package-20251216-120514.zip"
+  sha256 "0bb83631829de182864ed8c620acd87d462666fef516f5c484900a3ea30a9b5a"
+  version "2025.12.16.120514"
 
   depends_on "awscli"
   depends_on "python@3.12"
