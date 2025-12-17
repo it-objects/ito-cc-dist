@@ -1,9 +1,9 @@
 class ItoCc < Formula
   desc "ITO Claude Code with Amazon Bedrock"
   homepage "https://github.com/it-objects/ito-claude-code-platform"
-  url "https://raw.githubusercontent.com/it-objects/homebrew-ito-cc/main/packages/claude-code-package-20251217-162951.zip"
+  url "https://raw.githubusercontent.com/it-objects/homebrew-ito-cc/main/packages/claude-code-package-20251217-163349.zip"
   sha256 "d5a25c7ca8dab9a21c98fb49a7b62c76a4a77dc556c544544c454ad948272119"
-  version "2025.12.17.162951"
+  version "2025.12.17.163349"
 
   depends_on "awscli"
   depends_on "python@3.12"
@@ -33,8 +33,8 @@ class ItoCc < Formula
     bin.install_symlink libexec/"otel-helper" if (libexec/"otel-helper").exist?
 
     # Create setup script to configure AWS profiles
-    setup_script = bin/"ccwb-setup"
-    setup_script.write <<~EOS
+    # Write to temporary file first, then install with execute permissions
+    script_content = <<~EOS
       #!/bin/bash
       set -e
       
@@ -96,10 +96,12 @@ EOF
       
       echo "✓ Configuration complete!"
     EOS
-    # Set execute permissions - this is necessary for the file in Cellar
-    # The symlink in opt_bin will inherit these permissions
-    # Use File.chmod directly on the Pathname's string representation
-    File.chmod(0755, setup_script.to_s)
+    
+    # Write to temporary file and set execute permissions before installing
+    temp_script = buildpath/"ccwb-setup"
+    temp_script.write(script_content)
+    temp_script.chmod(0755)
+    bin.install temp_script
   end
 
   def post_install
