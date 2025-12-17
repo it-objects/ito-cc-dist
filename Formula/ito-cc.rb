@@ -1,14 +1,17 @@
 class ItoCc < Formula
-  desc "Claude Code with Amazon Bedrock"
-  homepage "https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock"
-  url "https://raw.githubusercontent.com/it-objects/homebrew-ito-cc/main/packages/claude-code-package-20251217-135333.zip"
-  sha256 "1bcea2b2ae921316e17b5909ba91d334f27451a3f7e311127ea4ad7a2f798a3c"
-  version "2025.12.17.135333"
+  desc "ITO Claude Code with Amazon Bedrock"
+  homepage "https://github.com/it-objects/ito-claude-code-platform"
+  url "https://raw.githubusercontent.com/it-objects/homebrew-ito-cc/main/packages/claude-code-package-20251217-151038.zip"
+  sha256 "d5a25c7ca8dab9a21c98fb49a7b62c76a4a77dc556c544544c454ad948272119"
+  version "2025.12.17.151038"
 
   depends_on "awscli"
   depends_on "python@3.12"
+  depends_on "anthropic/tap/claude-code"
 
   def install
+    # The zip file extracts to a 'claude-code-package' directory
+    cd "claude-code-package" do
       # Install binaries to libexec to keep config.json next to them
       if Hardware::CPU.arm?
         libexec.install "credential-process-macos-arm64" => "credential-provider"
@@ -65,7 +68,7 @@ class ItoCc < Formula
             echo "Configuring AWS profile: $PROFILE_NAME"
             
             # Remove old profile if exists
-            sed -i.bak "/\\[profile $PROFILE_NAME\\]/,/^$/d" ~/.aws/config 2>/dev/null || true
+            sed -i.bak "/\\\\[profile $PROFILE_NAME\\\\]/,/^$/d" ~/.aws/config 2>/dev/null || true
             
             # Get region
             PROFILE_REGION=$(python3 -c "import json; print(json.load(open('$CONFIG_FILE')).get('$PROFILE_NAME', {}).get('aws_region', 'us-east-1'))")
@@ -86,8 +89,8 @@ EOF
             SETTINGS_SRC="#{etc}/claude-code/claude-settings/settings.json"
             if [ -f "$SETTINGS_SRC" ]; then
                 # Replace placeholders
-                sed -e "s|__OTEL_HELPER_PATH__|#{libexec}/otel-helper|g" \
-                    -e "s|__CREDENTIAL_PROCESS_PATH__|#{libexec}/credential-provider|g" \
+                sed -e "s|__OTEL_HELPER_PATH__|#{libexec}/otel-helper|g" \\
+                    -e "s|__CREDENTIAL_PROCESS_PATH__|#{libexec}/credential-provider|g" \\
                     "$SETTINGS_SRC" > ~/.claude/settings.json
                 echo "Updated ~/.claude/settings.json"
             fi
@@ -96,14 +99,20 @@ EOF
         echo "✓ Configuration complete!"
       EOS
       chmod 0755, bin/"ccwb-setup"
+    end
+  end
+
+  def post_install
+    # Automatically run setup script after installation
+    system bin/"ccwb-setup"
   end
 
   def caveats
     <<~EOS
-      To complete the installation, please run:
+      Configuration has been automatically applied to your ~/.aws/config profiles and Claude settings.
+      
+      If you need to reconfigure, run:
         ccwb-setup
-
-      This will configure your ~/.aws/config profiles and Claude settings.
     EOS
   end
 end
