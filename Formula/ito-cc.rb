@@ -1,9 +1,9 @@
 class ItoCc < Formula
   desc "ITO Claude Code with Amazon Bedrock"
   homepage "https://github.com/it-objects/ito-claude-code-platform"
-  url "https://raw.githubusercontent.com/it-objects/homebrew-ito-cc/main/packages/claude-code-package-20251217-160401.zip"
+  url "https://raw.githubusercontent.com/it-objects/homebrew-ito-cc/main/packages/claude-code-package-20251217-160515.zip"
   sha256 "d5a25c7ca8dab9a21c98fb49a7b62c76a4a77dc556c544544c454ad948272119"
-  version "2025.12.17.160401"
+  version "2025.12.17.160515"
 
   depends_on "awscli"
   depends_on "python@3.12"
@@ -98,7 +98,7 @@ EOF
     EOS
     # Set execute permissions - this is necessary for the file in Cellar
     # The symlink in opt_bin will inherit these permissions
-    setup_script.chmod 0755
+    system "chmod", "+x", setup_script
   end
 
   def post_install
