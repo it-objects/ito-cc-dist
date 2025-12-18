@@ -1,9 +1,9 @@
 class ItoCc < Formula
   desc "ITO Claude Code with Amazon Bedrock"
   homepage "https://github.com/it-objects/ito-claude-code-platform"
-  url "https://raw.githubusercontent.com/it-objects/homebrew-ito-cc/main/packages/claude-code-package-20251218-074849.zip"
+  url "https://raw.githubusercontent.com/it-objects/homebrew-ito-cc/main/packages/claude-code-package-20251218-080500.zip"
   sha256 "fc5eaea3ac6fb6e072ff1b6ed5e9a27afb55e0a631eebcffcd1d0680bba921f4"
-  version "2025.12.18.074849"
+  version "2025.12.18.080500"
 
   depends_on "awscli"
   depends_on "python@3.12"
@@ -85,7 +85,7 @@ EOF
           echo "Configuring Claude settings..."
           mkdir -p ~/.claude
           
-          SETTINGS_SRC="#{etc}/claude-code/claude-settings/settings.json"
+          SETTINGS_SRC="#{etc}/claude-code/claude-settings/settings.json.default"
           if [ -f "$SETTINGS_SRC" ]; then
               # Replace placeholders with version-agnostic bin paths (symlinked)
               sed -e "s|__OTEL_HELPER_PATH__|#{opt_bin}/otel-helper|g" \\
