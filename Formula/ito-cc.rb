@@ -1,9 +1,9 @@
 class ItoCc < Formula
   desc "ITO Claude Code with Amazon Bedrock"
   homepage "https://github.com/it-objects/ito-claude-code-platform"
-  url "https://raw.githubusercontent.com/it-objects/homebrew-ito-cc/main/packages/claude-code-package-20251218-074331.zip"
-  sha256 "ee11d805cde8558b5279152e7dfb03b1ef505e0c6cf04cc7581334c32ca5cc17"
-  version "2025.12.18.074331"
+  url "https://raw.githubusercontent.com/it-objects/homebrew-ito-cc/main/packages/claude-code-package-20251218-074849.zip"
+  sha256 "fc5eaea3ac6fb6e072ff1b6ed5e9a27afb55e0a631eebcffcd1d0680bba921f4"
+  version "2025.12.18.074849"
 
   depends_on "awscli"
   depends_on "python@3.12"
